@@ -1,9 +1,9 @@
 let count = localStorage.getItem('count');
- if (count === null) {
-      count = 0; 
-    } else {
-      count = parseInt(count);
-    }
+if (count === null) {
+  count = 0;
+} else {
+  count = parseInt(count);
+}
 const sound1 = new Audio("大大吉.mp3");
 
 const results = [
@@ -12,7 +12,7 @@ const results = [
   { threshold: 0.96, text: '凶　「心が今、正しく狂いだす…」' },
   { threshold: 0.95, text: '凶　「仕方ないから家で寝るしかない」' },
   { threshold: 0.94, text: '凶　「アレクサ……すべてを……貫いて……」' },
-  { threshold: 0.93, text: '大大吉「東尋坊はやっぱり人が身を投げるからかな？サバの味が違うよね」', sound: sound1 },
+  { threshold: 0.93, text: '大大吉　「東尋坊はやっぱり人が身を投げるからかな？サバの味が違うよね」', sound: sound1 },
   { threshold: 0.88, text: '大吉　「ドライバー1本あればお前の命を絶つことなんて楽勝なんだぞ？」' },
   { threshold: 0.84, text: '大吉　「アレクサ！住所言って！そこの！」' },
   { threshold: 0.80, text: '大吉　「強い行動をするなよ……強く見えるからな……」' },
@@ -35,13 +35,22 @@ const results = [
   { threshold: 0.05, text: '吉　「ｷｬｯｷｬｯｷｬｯｷｬｯ」' },
   { threshold: 0.00, text: '吉　「花火はやめよう。まずいよ」' }
 ];
+const time = [
+  'おみくじを引いています',
+  'おみくじを引いています.',
+  'おみくじを引いています..',
+  'おみくじを引いています...',
+]
 
 function omikuji() {
   const output = document.getElementById('output');
   const counter = document.getElementById('counter');
-  
-  output.innerHTML = 'おみくじを引いています...';
-  
+
+  const delays = [100, 500, 1000, 1500];
+time.forEach((time, i) => {
+  setTimeout(() => output.innerHTML = time, delays[i]);
+});
+
   setTimeout(() => {
     count++;
     counter.textContent = count;
@@ -51,7 +60,7 @@ function omikuji() {
     console.log(rand);
 
     // 結果を配列から検索
-    const result = results.find(r => rand > r.threshold) ;
+    const result = results.find(r => rand > r.threshold);
 
     // サウンドが設定されていれば再生
     if (result.sound) result.sound.play();
@@ -61,10 +70,10 @@ function omikuji() {
   }, 2000);
 }
 function resetCount() {
-      if (confirm("カウントをリセットしますか？")) {
-        count = 0;
-        localStorage.setItem("count", count);
-        document.getElementById('counter').textContent = count;
-        alert("カウントをリセットしました！");
-      }
-    }
+  if (confirm("カウントをリセットしますか？")) {
+    count = 0;
+    localStorage.setItem("count", count);
+    document.getElementById('counter').textContent = count;
+    alert("カウントをリセットしました！");
+  }
+}
