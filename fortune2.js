@@ -1,10 +1,13 @@
-let count = localStorage.getItem('count');
+let count = parseInt(localStorage.getItem('count')) || 0;
 if (count === null) {
   count = 0;
 } else {
   count = parseInt(count);
 }
 const sound1 = new Audio("大大吉.mp3");
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('counter').textContent = count;
+});
 
 const results = [
   { threshold: 0.98, text: '大凶　「限度ってモンがありますよね」' },
