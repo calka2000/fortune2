@@ -1,4 +1,9 @@
-let count = 0;
+let count = localStorage.getItem('count');
+ if (count === null) {
+      count = 0; 
+    } else {
+      count = parseInt(count);
+    }
 const sound1 = new Audio("大大吉.mp3");
 
 const results = [
@@ -40,6 +45,7 @@ function omikuji() {
   setTimeout(() => {
     count++;
     counter.textContent = count;
+    localStorage.setItem("count", count);
 
     const rand = Math.random();
     console.log(rand);
@@ -54,3 +60,11 @@ function omikuji() {
 
   }, 2000);
 }
+function resetCount() {
+      if (confirm("カウントをリセットしますか？")) {
+        count = 0;
+        localStorage.setItem("count", count);
+        document.getElementById('counter').textContent = count;
+        alert("カウントをリセットしました！");
+      }
+    }
