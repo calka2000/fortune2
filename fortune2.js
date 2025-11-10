@@ -38,19 +38,22 @@ const results = [
   { threshold: 0.05, text: '吉　「ｷｬｯｷｬｯｷｬｯｷｬｯ」' },
   { threshold: 0.00, text: '吉　「花火はやめよう。まずいよ」' }
 ];
-const basetext = 'おみくじを引いています';
-const delays = [0, 100, 500,1000,1500];
 
 function omikuji() {
   const output = document.getElementById('output');
   const counter = document.getElementById('counter');
+  let text = 'おみくじを引いています';
+  let dotCount = 0;
+  output.textContent = text;
 
- for (let i = 0; i <= delays.length; i++) {
-  const delay = delays[i];
-  setTimeout(() => {
-    output.textContent = basetext + '.'.repeat(i);
-  }, delay);
- }
+  const intervalId = setInterval(() => {
+    dotCount++;
+    output.textContent = text + '.'.repeat(dotCount);
+    if (dotCount === 3) {
+      clearInterval(intervalId);
+    }
+  }, 500);
+
   setTimeout(() => {
     count++;
     counter.textContent = count;
@@ -59,16 +62,13 @@ function omikuji() {
     const rand = Math.random();
     console.log(rand);
 
-    // 結果を配列から検索
     const result = results.find(r => rand > r.threshold);
-
-    // サウンドが設定されていれば再生
     if (result.sound) result.sound.play();
 
     output.innerHTML = result.text;
-
   }, 2000);
 }
+
 function resetCount() {
   if (confirm("カウントをリセットしますか？")) {
     count = 0;
